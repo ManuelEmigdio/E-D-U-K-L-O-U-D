@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Registros - EDUKLOUD</title>
+    <style>
+        /* Estilos de tabla para una mejor visualización */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            text-align: left;
+            font-family: Arial, sans-serif;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        td {
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Usuarios Registrados</h1>
+    <table id="tablaUsuarios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se insertarán los usuarios -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener los usuarios y mostrarlos en la tabla
+        async function obtenerUsuarios() {
+            const respuesta = await fetch('http://localhost:5000/api/usuarios');
+            const usuarios = await respuesta.json();
+
+            const tabla = document.getElementById("tablaUsuarios").getElementsByTagName("tbody")[0];
+
+            // Limpiar cualquier contenido previo en la tabla
+            tabla.innerHTML = "";
+
+            // Agregar cada usuario como una fila en la tabla
+            usuarios.forEach(usuario => {
+                const fila = tabla.insertRow();
+                fila.innerHTML = `
+                    <td>${usuario.id}</td>
+                    <td>${usuario.nombre}</td>
+                    <td>${usuario.email}</td>
+                    <td>${usuario.edad}</td>
+                `;
+            });
+        }
+
+        // Llama a la función cuando la página cargue
+        window.onload = obtenerUsuarios;
+    </script>
+</body>
+</html>

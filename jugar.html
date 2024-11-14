@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugar - EDUKLOUD</title>
+    <style>
+        /* Reset del estilo de márgenes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Configuración del cuerpo */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+
+        /* Estilo del título */
+        .title {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: 2em;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Contenedor para las opciones de nivel educativo */
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em; /* Espacio entre cada botón */
+            align-items: center;
+        }
+
+        /* Estilo de los botones del menú */
+        .menu-option {
+            font-size: 2em;
+            font-family: 'Brush Script MT', cursive;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .menu-option:hover {
+            color: #555;
+        }
+
+        /* Estilo del botón de regresar */
+        .button {
+            width: 220px;
+            padding: 10px;
+            margin-top: 2em;
+            font-size: 1em;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">E D U K L O U D</div>
+    
+    <!-- Contenedor para las opciones de nivel educativo -->
+    <div class="menu">
+        <button class="menu-option" onclick="window.location.href='materias_preescolar.html'">Preescolar</button>
+        <button class="menu-option" onclick="window.location.href='materias_primaria.html'">Primaria</button>
+        <button class="menu-option" onclick="window.location.href='materias_secundaria.html'">Secundaria</button>
+        <button class="menu-option" onclick="window.location.href='materias_preparatoria.html'">Preparatoria</button>
+        <button class="menu-option" onclick="window.location.href='materias_universidad.html'">Universidad</button>
+    </div>
+
+    <!-- Botón para regresar al menú principal -->
+    <button class="button" onclick="window.location.href='Interfaz.html'">Regresar al Menú</button>
+</body>
+</html>

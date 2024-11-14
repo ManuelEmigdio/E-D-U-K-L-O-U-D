@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E D U K L O U D</title>
+    <style>
+        /* Reset de estilo de márgenes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Configuración del cuerpo */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: "Andale Mono", monospace;
+            background-color: #f4f4f4;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        /* Estilo del título */
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 1em;
+        }
+
+        /* Estilo de los botones de materias */
+        .subject-option {
+            font-size: 1.5em;
+            margin: 1em 0;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .subject-option:hover {
+            color: #555;
+        }
+
+        /* Estilo de los botones */
+        .button {
+            margin-top: 1em;
+            padding: 10px;
+            font-size: 1em;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            width: 220px;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Materias - Secundaria</div>
+
+    <!-- Opciones de materias para el nivel secundaria -->
+    <div class="subject-option" onclick="window.location.href='diccionario_de_datos_secundaria.html?materia=espanol'">Español</div>
+    <div class="subject-option" onclick="window.location.href='diccionario_de_datos_secundaria.html?materia=matematicas'">Matemáticas</div>
+    <div class="subject-option" onclick="window.location.href='diccionario_de_datos_secundaria.html?materia=ingles'">Inglés</div>
+    <div class="subject-option" onclick="window.location.href='diccionario_de_datos_secundaria.html?materia=fisica'">Física</div>
+    <div class="subject-option" onclick="window.location.href='diccionario_de_datos_secundaria.html?materia=artes'">Artes</div>
+    <div class="subject-option" onclick="window.location.href='diccionario_de_datos_secundaria.html?materia=biologia'">Biología</div>
+    <div class="subject-option" onclick="window.location.href='diccionario_de_datos_secundaria.html?materia=historia'">Historia</div>
+
+    <!-- Botones de navegación -->
+    <a href="materias_secundaria.html" class="button">Regresar para seleccionar otra materia</a>
+    <a href="Interfaz.html" class="button">Regresar al menú</a>
+</body>
+</html>

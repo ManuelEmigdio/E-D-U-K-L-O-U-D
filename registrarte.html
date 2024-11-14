@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarte - EDUKLOUD</title>
+    <style>
+        /* Reset de estilo de márgenes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Configuración del cuerpo */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+
+        /* Estilo del título */
+        .title {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: 1em;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Título del formulario de registro */
+        .form-title {
+            font-size: 1.5em;
+            margin-bottom: 1.5em;
+        }
+
+        /* Contenedor del formulario */
+        .form-container {
+            text-align: center;
+        }
+
+        /* Estilo de los labels */
+        label {
+            font-size: 1em;
+            margin-top: 1em;
+            display: block;
+        }
+
+        /* Estilo de los campos de entrada */
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: 200px;
+            padding: 10px;
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #006080; /* Color de fondo similar a la imagen */
+            color: white;
+            text-align: center;
+        }
+
+        /* Estilo de los botones */
+        .button {
+            width: 220px;
+            padding: 10px;
+            margin-top: 1em;
+            font-size: 1em;
+            color: white;
+            background-color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        /* Mensaje final */
+        .message {
+            margin-top: 1em;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .important-message {
+            font-weight: bold;
+            color: #333;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">E D U K L O U D</div>
+
+    <!-- Contenedor del formulario de registro -->
+    <div class="form-container">
+        <div class="form-title">Regístrate</div>
+        <form id="formRegistro">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email">
+            
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" name="edad" placeholder="Edad">
+            
+            <!-- Botón para guardar los datos -->
+            <button type="button" class="button" onclick="guardarDatos()">Guardar Datos</button>
+        </form>
+
+        <!-- Botón para regresar al menú principal -->
+        <button class="button" onclick="window.location.href='Interfaz.html'">Regresar al Menú</button>
+
+        <!-- Mensajes adicionales -->
+        <div class="important-message">¡Nivel primaria y preescolar no tiene ni un registro!</div>
+        <div class="message">Tus datos son seguros</div>
+    </div>
+
+    <script>
+        function guardarDatos() {
+            alert("Datos guardados correctamente"); // Esto es solo un ejemplo. Aquí puedes añadir la lógica para guardar datos en la base de datos.
+        }
+    </script>
+</body>
+</html>

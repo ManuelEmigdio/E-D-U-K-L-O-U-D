@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDUKLOUD - Preguntas Secundaria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .level {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .question-container {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #005f73;
+        }
+        .response-container input {
+            width: 80%;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #005f73;
+            margin-top: 5px;
+        }
+        .timer {
+            font-size: 1.2em;
+            color: #333;
+            margin: 15px 0;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #005f73;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 40%;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #0a9396;
+        }
+        /* Estilos para los botones de guardar datos y ver puntuación */
+        .data-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            font-size: 1em;
+        }
+        .data-buttons button {
+            background: none;
+            border: none;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .data-buttons button:hover {
+            color: #005f73;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>EDUKLOUD</h1>
+    <div class="level">Nivel Secundaria</div>
+    <div class="question-container" id="pregunta">Pregunta:</div>
+    
+    <div class="response-container">
+        <label for="respuesta">Respuesta:</label>
+        <input type="text" id="respuesta" placeholder="Escribe tu respuesta aquí">
+    </div>
+
+    <div class="timer" id="timer">Tiempo: 10</div>
+
+    <div class="button-container">
+        <button class="button" onclick="verificarRespuesta()">Enviar respuesta</button>
+        <button class="button" onclick="volverMenu()">Regresar al menú de materias</button>
+    </div>
+
+    <!-- Botones de Guardar Datos y Ver Puntuación -->
+    <div class="data-buttons">
+        <button onclick="guardarDatos()">Guardar datos</button>
+        <button onclick="verPuntuacion()">Ver puntuación</button>
+    </div>
+</div>
+
+<script>
+    // Diccionario de preguntas para secundaria
+    const preguntasSecundaria = {
+        "espanol": {
+                "secundaria": {
+                    "facil": [
+                        ["¿Cuál es el antónimo de 'honesto'?", "deshonesto"],
+                        ["¿Qué tipo de palabra es 'felicidad'?", "sustantivo"],
+                        ["¿Cuál es el sinónimo de 'grande'?", "enorme"],
+                        ["¿Qué es una metáfora?", "comparación implícita"]
+                    ],
+                    "medio": [
+                        ["¿Qué tipo de texto tiene la función de informar?", "texto informativo"],
+                        ["¿Qué es una fábula?", "relato breve con una enseñanza o moraleja"],
+                        ["¿Qué es un adjetivo?", "palabra que describe un sustantivo"],
+                        ["¿Qué significa la palabra 'hipérbole'?", "exageración"]
+                    ],
+                    "dificil": [
+                        ["¿Qué es una aliteración?", "repetición de sonidos en palabras cercanas"],
+                        ["¿Qué es una paradoja?", "una contradicción lógica"],
+                        ["¿Qué es un oxímoron?", "una contradicción en términos"],
+                        ["¿Qué significa la palabra 'símil'?", "comparación explícita"]
+                    ]
+                }
+            },
+            "matematicas": {
+                "secundaria": {
+                    "facil": [
+                        ["¿Cuánto es 15 + 25?", "40"],
+                        ["¿Cuál es el resultado de 12 x 6?", "72"],
+                        ["¿Qué significa el símbolo π en matemáticas?", "pi"],
+                        ["¿Cuánto es 100 ÷ 4?", "25"]
+                    ],
+                    "medio": [
+                        ["¿Cuánto es la raíz cuadrada de 64?", "8"],
+                        ["¿Cuál es el resultado de 7 elevado al cuadrado?", "49"],
+                        ["¿Cuánto es 45 ÷ 9?", "5"],
+                        ["Si un ángulo mide 90 grados, ¿cómo se llama?", "ángulo recto"]
+                    ],
+                    "dificil": [
+                        ["¿Cuál es la fórmula para el área de un triángulo?", "base por altura dividido entre 2"],
+                        ["¿Cuál es el valor aproximado de π (pi) con dos decimales?", "3.14"],
+                        ["¿Cuánto es 3 elevado a la cuarta potencia?", "81"],
+                        ["¿Cómo se llama el teorema que relaciona los lados de un triángulo rectángulo?", "Teorema de Pitágoras"]
+                    ]
+                }
+            },
+            "ingles": {
+                "secundaria": {
+                    "facil": [
+                        ["¿Cómo se dice 'mesa' en inglés?", "table"],
+                        ["¿Cuál es el plural de 'child'?", "children"],
+                        ["¿Cómo se dice 'azul' en inglés?", "blue"],
+                        ["¿Cómo se dice 'gracias' en inglés?", "thank you"]
+                    ],
+                    "medio": [
+                        ["¿Cómo se dice 'biblioteca' en inglés?", "library"],
+                        ["¿Cuál es el pasado de 'go'?", "went"],
+                        ["¿Cómo se dice 'profesor' en inglés?", "teacher"],
+                        ["¿Qué significa 'quick' en español?", "rápido"]
+                    ],
+                    "dificil": [
+                        ["¿Qué significa la palabra 'nevertheless'?", "sin embargo"],
+                        ["¿Cuál es el participio pasado de 'eat'?", "eaten"],
+                        ["¿Cómo se dice 'desarrollar' en inglés?", "develop"],
+                        ["¿Qué significa 'furthermore'?", "además"]
+                    ]
+                }
+            },
+            "historia": {
+                "secundaria": {
+                    "facil": [
+                        ["¿Quién fue el líder de la Revolución Francesa?", "Maximiliano Robespierre"],
+                        ["¿En qué siglo ocurrió la Independencia de México?", "Siglo XIX"],
+                        ["¿Cuál fue la primera civilización de la historia?", "Sumeria"],
+                        ["¿En qué año comenzó la Primera Guerra Mundial?", "1914"]
+                    ],
+                    "medio": [
+                        ["¿Quién fue el principal líder de la independencia de Argentina?", "José de San Martín"],
+                        ["¿Qué país europeo colonizó gran parte de África en el siglo XIX?", "Reino Unido"],
+                        ["¿Cuál es el nombre del documento firmado en 1215 en Inglaterra que limitó el poder del rey?", "Carta Magna"],
+                        ["¿En qué año comenzó la Segunda Guerra Mundial?", "1939"]
+                    ],
+                    "dificil": [
+                        ["¿Qué fue la Guerra Fría?", "Conflicto político e ideológico entre Estados Unidos y la Unión Soviética"],
+                        ["¿Quién fue el último emperador de México?", "Maximiliano de Habsburgo"],
+                        ["¿En qué año fue la Revolución Rusa?", "1917"],
+                        ["¿Qué tratado puso fin a la Primera Guerra Mundial?", "Tratado de Versalles"]
+                    ]
+                }
+            },
+            "artes": {
+                "secundaria": {
+                    "facil": [
+                        ["¿Qué es una paleta de colores?", "conjunto de colores seleccionados para una obra"],
+                        ["¿Quién pintó la Mona Lisa?", "Leonardo da Vinci"],
+                        ["¿Qué es el bodegón?", "obra que representa objetos inanimados"],
+                        ["¿Qué es la acuarela?", "técnica de pintura que utiliza agua"]
+                    ],
+                    "medio": [
+                        ["¿Qué es el claroscuro?", "técnica que utiliza contrastes de luz y sombra"],
+                        ["¿Quién fue Vincent van Gogh?", "un pintor postimpresionista famoso por 'La noche estrellada'"],
+                        ["¿Qué es el cubismo?", "movimiento artístico que representa figuras en formas geométricas"],
+                        ["¿Qué es la perspectiva en el arte?", "técnica para representar la profundidad en una obra"]
+                    ],
+                    "dificil": [
+                        ["¿Qué es el surrealismo?", "movimiento artístico que explora el subconsciente"],
+                        ["¿Qué es el arte abstracto?", "estilo de arte que no representa figuras o formas reconocibles"],
+                        ["¿Quién fue Salvador Dalí?", "artista surrealista español famoso por sus relojes derretidos"],
+                        ["¿Qué es un tríptico?", "obra de arte dividida en tres paneles"]
+                    ]
+                }
+            },
+            "fisica": {
+                "secundaria": {
+                    "facil": [
+                        ["¿Qué es la gravedad?", "fuerza que atrae los objetos hacia la Tierra"],
+                        ["¿Cuál es la unidad de medida de la masa?", "kilogramo"],
+                        ["¿Cuál es la velocidad de la luz?", "300,000 km/s"],
+                        ["¿Qué es la energía?", "capacidad de realizar trabajo"]
+                    ],
+                    "medio": [
+                        ["¿Qué es la ley de inercia?", "principio que dice que un objeto en reposo permanece en reposo"],
+                        ["¿Qué es la energía cinética?", "energía de un objeto en movimiento"],
+                        ["¿Qué es un joule?", "unidad de medida de la energía"],
+                        ["¿Cuál es la fórmula de la velocidad?", "distancia dividido entre tiempo"]
+                    ],
+                    "dificil": [
+                        ["¿Qué es la teoría de la relatividad?", "teoría de Einstein sobre la relación entre espacio y tiempo"],
+                        ["¿Qué es la termodinámica?", "estudio del calor y su transferencia"],
+                        ["¿Qué es la física cuántica?", "rama de la física que estudia las partículas subatómicas"],
+                        ["¿Qué es la ley de gravitación universal?", "fórmula que describe la fuerza de atracción entre dos masas"]
+                    ]
+                }
+            }
+        };
+
+    let materiaSeleccionada = "";
+    let nivel = "facil";
+    let timeLeft = 10;
+    let timer;
+    let preguntaIndex = 0;
+    let puntuacion = 0;
+    let respuestaCorrectaFlag = false; // Variable para marcar si la respuesta es correcta
+
+    function seleccionarMateria() {
+        const urlParams = new URLSearchParams(window.location.search);
+        materiaSeleccionada = urlParams.get('materia') || "espanol";
+        document.getElementById("pregunta").textContent = `Pregunta: ${preguntasSecundaria[materiaSeleccionada]["secundaria"][nivel][preguntaIndex][0]}`;
+    }
+
+    function mostrarPregunta() {
+        const preguntaElement = document.getElementById("pregunta");
+        const preguntasNivel = preguntasSecundaria[materiaSeleccionada]["secundaria"][nivel];
+        const pregunta = preguntasNivel[preguntaIndex][0];
+        preguntaElement.textContent = `Pregunta: ${pregunta}`;
+        iniciarTemporizador();
+        respuestaCorrectaFlag = false; // Reinicia el flag en cada pregunta
+    }
+
+    function iniciarTemporizador() {
+        timeLeft = 10;
+        const timerElement = document.getElementById("timer");
+        clearInterval(timer);
+        
+        timer = setInterval(() => {
+            timerElement.textContent = `Tiempo: ${timeLeft}`;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("¡Se acabó el tiempo!");
+                siguientePregunta();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function verificarRespuesta() {
+        const respuestaUsuario = document.getElementById("respuesta").value.toLowerCase().trim();
+        const respuestaCorrecta = preguntasSecundaria[materiaSeleccionada]["secundaria"][nivel][preguntaIndex][1];
+
+        clearInterval(timer);
+        if (respuestaUsuario === respuestaCorrecta.toLowerCase()) {
+            alert("¡Correcto!");
+            respuestaCorrectaFlag = true; // Marca la respuesta como correcta
+        } else {
+            alert(`Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`);
+        }
+        document.getElementById("respuesta").value = "";
+        siguientePregunta();
+    }
+
+    function siguientePregunta() {
+        preguntaIndex++;
+        const preguntasNivel = preguntasSecundaria[materiaSeleccionada]["secundaria"][nivel];
+        if (preguntaIndex >= preguntasNivel.length) {
+            preguntaIndex = 0;
+        }
+        mostrarPregunta();
+    }
+
+    function volverMenu() {
+        window.location.href = "materias_secundaria.html";
+    }
+
+    // Funciones para los botones adicionales
+    function guardarDatos() {
+        if (respuestaCorrectaFlag) {
+            puntuacion += 10; // Agrega 10 puntos solo si la respuesta fue correcta
+            respuestaCorrectaFlag = false; // Reinicia el flag después de guardar
+            alert("Datos guardados. ¡Has ganado 10 puntos!");
+        } else {
+            alert("No se ha ganado puntos porque la respuesta no fue correcta.");
+        }
+    }
+
+    function verPuntuacion() {
+        alert(`Tu puntuación actual es: ${puntuacion} puntos.`);
+    }
+
+    seleccionarMateria();
+    mostrarPregunta();
+</script>
+
+</body>
+</html>

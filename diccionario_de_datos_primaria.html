@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDUKLOUD - Preguntas Primaria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .question-container {
+            background-color: #005f73;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .response-container {
+            margin-bottom: 15px;
+        }
+        .response-container input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+        .timer {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #005f73;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #0a9396;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>EDUKLOUD</h1>
+    <div class="subtitle">Materia <span id="materia"></span></div>
+    <div class="question-container" id="pregunta">Pregunta:</div>
+    
+    <div class="response-container">
+        <label for="respuesta">Respuesta:</label>
+        <input type="text" id="respuesta" placeholder="Escribe tu respuesta aquí">
+    </div>
+
+    <div class="timer" id="timer">Tiempo: 10</div>
+    <button class="button" onclick="verificarRespuesta()">Enviar respuesta</button>
+    <button class="button" onclick="volverMenu()">Regresar al menú de materias</button>
+</div>
+
+<script>
+    let materiaSeleccionada = ""; // Variable para la materia seleccionada
+    let timeLeft = 10;
+    let timer;
+    let preguntaIndex = 0;
+
+    // Objeto de preguntas para nivel primaria
+    const preguntas = {
+        "espanol": {
+            "primaria": {
+                "facil": [
+                    ["¿Cuál es el antónimo de 'alegre'?", "triste"],
+                    ["¿Cómo se escribe 'perro' en plural?", "perros"],
+                    ["¿Cuál es el sinónimo de 'rápido'?", "veloz"],
+                    ["¿Cuál es el diminutivo de 'casa'?", "casita"]
+                ],
+                "medio": [
+                    ["¿Qué tipo de palabra es 'felicidad'?", "sustantivo"],
+                    ["¿Cómo se llama el verbo que indica una acción en el pasado?", "pretérito"],
+                    ["¿Cuál es el antónimo de 'fácil'?", "difícil"],
+                    ["¿Qué tipo de palabra es 'hermosísimo'?", "superlativo"]
+                ],
+                "dificil": [
+                    ["¿Qué es una metáfora?", "comparación implícita"],
+                    ["¿Qué es una onomatopeya?", "palabra que imita sonidos"],
+                    ["¿Qué significa la palabra 'oxímoron'?", "contradicción en términos"],
+                    ["¿Cuál es el sinónimo de 'abundante'?", "numeroso"]
+                ]
+            }
+        },
+        "matematicas": {
+            "primaria": {
+                "facil": [
+                    ["¿Cuánto es 10 + 5?", "15"],
+                    ["¿Cuánto es 8 - 3?", "5"],
+                    ["¿Cuánto es 6 x 2?", "12"],
+                    ["¿Cuánto es 9 ÷ 3?", "3"]
+                ],
+                "medio": [
+                    ["¿Cuánto es 25 - 7?", "18"],
+                    ["¿Cuánto es 5 x 5?", "25"],
+                    ["¿Cuánto es 36 ÷ 6?", "6"],
+                    ["¿Cuánto es 100 - 45?", "55"]
+                ],
+                "dificil": [
+                    ["¿Cuánto es 144 ÷ 12?", "12"],
+                    ["¿Cuál es la raíz cuadrada de 81?", "9"],
+                    ["¿Cuánto es 15 x 6?", "90"],
+                    ["¿Cuál es el resultado de 72 ÷ 8?", "9"]
+                ]
+            }
+        },
+        "ingles": {
+            "primaria": {
+                "facil": [
+                    ["¿Cómo se dice 'amigo' en inglés?", "friend"],
+                    ["¿Cuál es el color de una 'apple'?", "red"],
+                    ["¿Cómo se dice 'feliz' en inglés?", "happy"],
+                    ["¿Cómo se dice 'escuela' en inglés?", "school"]
+                ],
+                "medio": [
+                    ["¿Cómo se dice 'hermana' en inglés?", "sister"],
+                    ["¿Cuál es el color de una 'grape'?", "purple"],
+                    ["¿Cómo se dice 'triste' en inglés?", "sad"],
+                    ["¿Cómo se dice 'familia' en inglés?", "family"]
+                ],
+                "dificil": [
+                    ["¿Cómo se dice 'montaña' en inglés?", "mountain"],
+                    ["¿Cuál es el color de una 'orange'?", "orange"],
+                    ["¿Cómo se dice 'árbol' en inglés?", "tree"],
+                    ["¿Cómo se dice 'ciudad' en inglés?", "city"]
+                ]
+            }
+        },
+        "geografia": {
+            "primaria": {
+                "facil": [
+                    ["¿Cuál es el planeta en el que vivimos?", "Tierra"],
+                    ["¿Cuál es el país donde se encuentra la Torre Eiffel?", "Francia"],
+                    ["¿Cómo se llama el océano más grande del mundo?", "Océano Pacífico"],
+                    ["¿En qué continente está México?", "América"]
+                ],
+                "medio": [
+                    ["¿Cuál es el río más largo del mundo?", "Amazonas"],
+                    ["¿Cómo se llama el continente donde se encuentra Egipto?", "África"],
+                    ["¿En qué país se encuentra la Gran Muralla?", "China"],
+                    ["¿Cuál es la capital de España?", "Madrid"]
+                ],
+                "dificil": [
+                    ["¿Cuál es el desierto más grande del mundo?", "Sahara"],
+                    ["¿En qué país se encuentra el Monte Everest?", "Nepal"],
+                    ["¿Cuál es el país más grande del mundo?", "Rusia"],
+                    ["¿Cuál es el nombre del océano que se encuentra al oeste de América?", "Océano Pacífico"]
+                ]
+            }
+        },
+        "ciencias_naturales": {
+            "primaria": {
+                "facil": [
+                    ["¿Cuál es el órgano que usamos para ver?", "ojo"],
+                    ["¿Cómo se llama el proceso por el cual las plantas producen su alimento?", "fotosíntesis"],
+                    ["¿Cuál es el planeta más cercano al Sol?", "Mercurio"],
+                    ["¿Qué órgano bombea sangre en el cuerpo?", "corazón"]
+                ],
+                "medio": [
+                    ["¿Qué gas respiramos que es necesario para vivir?", "oxígeno"],
+                    ["¿Cuál es el animal terrestre más grande del mundo?", "elefante"],
+                    ["¿Cómo se llama el líquido que circula por las venas?", "sangre"],
+                    ["¿Cuál es el sistema que controla el cuerpo humano?", "sistema nervioso"]
+                ],
+                "dificil": [
+                    ["¿Cuál es el metal que se encuentra en la hemoglobina de la sangre?", "hierro"],
+                    ["¿Cómo se llama el proceso de cambio de agua líquida a vapor?", "evaporación"],
+                    ["¿Cuál es el planeta conocido como el 'planeta rojo'?", "Marte"],
+                    ["¿Cuál es el órgano más grande del cuerpo humano?", "piel"]
+                ]
+            }
+        }
+    };
+
+    function seleccionarMateria() {
+        const urlParams = new URLSearchParams(window.location.search);
+        materiaSeleccionada = urlParams.get('materia') || "espanol"; 
+        document.getElementById("materia").textContent = materiaSeleccionada.charAt(0).toUpperCase() + materiaSeleccionada.slice(1);
+    }
+
+    function mostrarPregunta() {
+        const preguntaElement = document.getElementById("pregunta");
+        const nivel = "facil"; 
+        const pregunta = preguntas[materiaSeleccionada]["primaria"][nivel][preguntaIndex][0];
+        
+        preguntaElement.textContent = `Pregunta: ${pregunta}`;
+        iniciarTemporizador();
+    }
+
+    function iniciarTemporizador() {
+        timeLeft = 10;
+        const timerElement = document.getElementById("timer");
+        clearInterval(timer);
+        
+        timer = setInterval(() => {
+            timerElement.textContent = `Tiempo: ${timeLeft}`;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("¡Se acabó el tiempo!");
+                siguientePregunta();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function verificarRespuesta() {
+        const respuestaUsuario = document.getElementById("respuesta").value.toLowerCase().trim();
+        const respuestaCorrecta = preguntas[materiaSeleccionada]["primaria"]["facil"][preguntaIndex][1];
+
+        clearInterval(timer);
+        if (respuestaUsuario === respuestaCorrecta.toLowerCase()) {
+            alert("¡Correcto!");
+        } else {
+            alert(`Incorrecto. La respuesta correcta es: ${respuestaCorrecta}`);
+        }
+        document.getElementById("respuesta").value = "";
+        siguientePregunta();
+    }
+
+    function siguientePregunta() {
+        preguntaIndex++;
+        const nivel = "facil";
+        if (preguntaIndex >= preguntas[materiaSeleccionada]["primaria"][nivel].length) {
+            preguntaIndex = 0; 
+        }
+        mostrarPregunta();
+    }
+
+    function volverMenu() {
+        window.location.href = "materias_primaria.html";
+    }
+
+    seleccionarMateria();
+    mostrarPregunta();
+</script>
+
+</body>
+</html>

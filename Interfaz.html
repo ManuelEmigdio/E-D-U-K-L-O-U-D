@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDUKLOUD</title>
+    <style>
+        /* Reset del estilo de márgenes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Configuración del cuerpo */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            flex-direction: column;
+        }
+
+        /* Estilo del título */
+        .title {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: 3em;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Contenedor para las opciones del menú */
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em; /* Espacio entre cada botón */
+            align-items: center;
+        }
+
+        /* Estilo de los botones del menú */
+        .menu-option {
+            font-size: 2em;
+            font-family: 'Brush Script MT', cursive; /* Fuente cursiva similar a la imagen */
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        /* Efecto hover en los botones */
+        .menu-option:hover {
+            color: #555;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="title">E D U K L O U D</div>
+    
+    <!-- Contenedor para las opciones del menú -->
+    <div class="menu">
+        <button class="menu-option" onclick="window.location.href='jugar.html'">Jugar</button>
+        <button class="menu-option" onclick="window.location.href='registrarte.html'">Registrarte</button>
+        <button class="menu-option" onclick="window.location.href='configuracion.html'">Configuración</button>
+        <button class="menu-option" onclick="window.location.href='logros.html'">Logros</button>
+    </div>
+</body>
+</html>
+</html>
